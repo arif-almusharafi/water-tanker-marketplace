@@ -98,3 +98,10 @@ export function getPrice(supplier, capacity, water) {
     supplier.price + (Number(capacity) - 6) * 15 + (water === "شرب" ? 30 : 0)
   );
 }
+// "ar-SA" defaults to the Hijri calendar; the picker uses Gregorian dates.
+export function formatSchedule(value) {
+  return new Date(value).toLocaleString("ar-SA-u-ca-gregory", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+}

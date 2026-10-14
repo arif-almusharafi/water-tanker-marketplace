@@ -21,7 +21,7 @@ npm run lint
 npm test
 ```
 
-Browser tests use the installed Microsoft Edge browser in headless mode. Run `npm test` to check booking, pricing, tracking, dashboard actions, mobile navigation, and responsive overflow. Screenshots are written to `test-results/`.
+Browser tests run headless. On Windows they use the installed Microsoft Edge; on macOS/Linux run `npx playwright install chromium` once (or set `PW_CHANNEL`, e.g. `PW_CHANNEL=chrome`). Run `npm test` to check booking, pricing, tracking, dashboard actions, mobile navigation, and responsive overflow. Screenshots are written to `test-results/`.
 
 ## Features
 

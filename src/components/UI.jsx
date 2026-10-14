@@ -1,4 +1,4 @@
-﻿import {
+import {
   ArrowLeft,
   BadgeCheck,
   Clock3,
@@ -155,6 +155,7 @@ export function MapPreview({ progress = 0, area = "النرجس" }) {
   return (
     <div
       className="map-preview"
+      role="figure"
       aria-label="خريطة توضيحية لمسار التوصيل، ليست خريطة حقيقية"
     >
       <div className="map-block b1" />

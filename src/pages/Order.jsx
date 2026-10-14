@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,7 +10,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { Button, MapPreview, SupplierCard } from "../components/UI";
-import { cities, getPrice, suppliers } from "../data/mock";
+import { cities, formatSchedule, getPrice, suppliers } from "../data/mock";
 export default function Order({ city, initialSupplier, onConfirm }) {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
@@ -26,16 +26,29 @@ export default function Order({ city, initialSupplier, onConfirm }) {
   });
   const [supplier, setSupplier] = useState(initialSupplier || suppliers[0]);
   const [busy, setBusy] = useState(false);
+  const [scheduleError, setScheduleError] = useState("");
+  const confirmTimer = useRef(null);
+  useEffect(() => () => clearTimeout(confirmTimer.current), []);
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
   const price = getPrice(supplier, form.capacity, form.water);
   function submit(e) {
     e.preventDefault();
+    // The input's min only applies on step 1; time may pass before confirming.
+    if (
+      step >= 1 &&
+      form.time === "later" &&
+      new Date(form.schedule).getTime() <= Date.now()
+    ) {
+      setScheduleError("اختر موعداً في المستقبل.");
+      setStep(1);
+      return;
+    }
     if (step < 3) {
       setStep(step + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setBusy(true);
-      window.setTimeout(
+      confirmTimer.current = window.setTimeout(
         () =>
           onConfirm({
             ...form,
@@ -207,8 +220,17 @@ export default function Order({ city, initialSupplier, onConfirm }) {
                       .toISOString()
                       .slice(0, 16)}
                     value={form.schedule}
-                    onChange={(e) => update("schedule", e.target.value)}
+                    aria-invalid={scheduleError ? true : undefined}
+                    onChange={(e) => {
+                      update("schedule", e.target.value);
+                      setScheduleError("");
+                    }}
                   />
+                  {scheduleError && (
+                    <small className="field-error" role="alert">
+                      {scheduleError}
+                    </small>
+                  )}
                 </label>
               )}
               <label>
@@ -260,7 +282,7 @@ export default function Order({ city, initialSupplier, onConfirm }) {
                   <dd>
                     {form.time === "now"
                       ? `خلال ${supplier.eta}–${supplier.eta + 10} دقيقة`
-                      : new Date(form.schedule).toLocaleString("ar-SA")}
+                      : formatSchedule(form.schedule)}
                   </dd>
                 </div>
                 {form.notes && (

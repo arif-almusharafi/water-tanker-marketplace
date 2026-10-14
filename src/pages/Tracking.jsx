@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Button, MapPreview, Modal } from "../components/UI";
-import { statuses } from "../data/mock";
+import { formatSchedule, statuses } from "../data/mock";
 export default function Tracking({ order, setOrder, startOrder, notify }) {
   const [cancelOpen, setCancelOpen] = useState(false);
   if (!order)
@@ -119,7 +119,7 @@ export default function Tracking({ order, setOrder, startOrder, notify }) {
                     : order.status === 4
                       ? "تم التسليم بنجاح"
                       : order.time === "later"
-                        ? new Date(order.schedule).toLocaleString("ar-SA")
+                        ? formatSchedule(order.schedule)
                         : order.status === 3
                           ? "الوايت عند موقعك"
                           : `${Math.max(5, order.supplier.eta - order.status * 8)}–${Math.max(10, order.supplier.eta + 10 - order.status * 8)} دقيقة`}

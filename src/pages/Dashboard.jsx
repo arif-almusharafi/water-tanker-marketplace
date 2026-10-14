@@ -36,9 +36,9 @@ export default function Dashboard({ notify }) {
   const [tab, setTab] = useState("overview");
   const completed = history.filter((o) => o.result === "مكتمل");
   function handleOrder(order, accept) {
-    setOrders(orders.filter((o) => o.id !== order.id));
-    if (accept) setActive([...active, order]);
-    else setHistory([{ ...order, result: "مرفوض" }, ...history]);
+    setOrders((list) => list.filter((o) => o.id !== order.id));
+    if (accept) setActive((list) => [...list, order]);
+    else setHistory((list) => [{ ...order, result: "مرفوض" }, ...list]);
     notify(
       accept
         ? "تم قبول الطلب وإضافته للتوصيلات النشطة"
@@ -218,8 +218,11 @@ export default function Dashboard({ notify }) {
                   <Button
                     secondary
                     onClick={() => {
-                      setActive(active.filter((a) => a.id !== o.id));
-                      setHistory([{ ...o, result: "مكتمل" }, ...history]);
+                      setActive((list) => list.filter((a) => a.id !== o.id));
+                      setHistory((list) => [
+                        { ...o, result: "مكتمل" },
+                        ...list,
+                      ]);
                       notify("تم إكمال التوصيل وتحديث إيرادات اليوم");
                     }}
                   >
