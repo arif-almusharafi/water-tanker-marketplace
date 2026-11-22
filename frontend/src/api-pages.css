@@ -1,0 +1,277 @@
+/* Styles for the parts added when the app moved to the real API:
+   loading / error / empty states, form errors, the supplier register and
+   login pages, the approval banner, and small dashboard additions.
+   Arif's original styles stay in styles.css. This file loads after it. */
+
+:root {
+  --error: #b42318;
+  --error-bg: #fff4f2;
+  --warning-bg: #fff8e6;
+  --warning-text: #7a4b00;
+}
+
+/* ---------- Loading, error, and empty states ---------- */
+
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px dashed #d6e4ec;
+  border-radius: 13px;
+  color: #5d7a8b;
+  font-size: 14px;
+}
+.state-box svg {
+  color: var(--blue);
+}
+.state-box.error svg {
+  color: var(--error);
+}
+.state-box small {
+  font-size: 12px;
+}
+.spinner.dark {
+  border-color: #cfe3ef;
+  border-top-color: var(--blue);
+  width: 26px;
+  height: 26px;
+}
+
+/* ---------- Forms ---------- */
+
+/* A field = label + control, then hint and error under it. */
+.field {
+  margin-bottom: 21px;
+}
+.form-panel .field > label {
+  margin-bottom: 0;
+}
+.field-hint,
+.field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 400;
+}
+.field-hint {
+  color: #6f8796;
+}
+.field-error {
+  color: var(--error);
+}
+.has-error input,
+.has-error select,
+.has-error textarea {
+  border-color: var(--error);
+}
+/* Phone and number fields are left to right, but line up with the
+   right-aligned Arabic fields around them. */
+input[dir="ltr"] {
+  text-align: right;
+}
+.form-error {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid #f6d2cd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 13px;
+  margin-block: 15px;
+}
+.form-actions {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 16px;
+}
+.password-wrap {
+  position: relative;
+  display: block;
+}
+.password-wrap input {
+  padding-left: 52px;
+}
+.password-toggle {
+  position: absolute;
+  left: 4px;
+  bottom: 2px;
+  width: 44px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: none;
+  color: #5d7a8b;
+  border-radius: 6px;
+}
+
+/* ---------- Register and login pages ---------- */
+
+.auth-page {
+  max-width: 520px;
+}
+.auth-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #5d7a8b;
+}
+.inline-link {
+  background: none;
+  color: var(--blue);
+  padding: 4px 2px;
+  font-size: inherit;
+  text-decoration: underline;
+}
+
+/* ---------- Tracking ---------- */
+
+.ref-lookup {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  width: min(420px, 100%);
+  text-align: start;
+}
+.ref-lookup label {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+.status-cancelled,
+.status-rejected {
+  color: #8a4b4b;
+  background: #fff4f4;
+  border-color: #f3dede;
+}
+.refresh-note {
+  margin-bottom: 15px;
+}
+.call-hint {
+  margin-top: 8px;
+}
+.tracking-details a.button {
+  width: 100%;
+}
+
+/* ---------- Home ---------- */
+
+.hero-proof small {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.hero-proof-icon {
+  color: var(--blue);
+}
+
+/* ---------- Supplier dashboard ---------- */
+
+.heading-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 8px;
+}
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  color: #a04a4a;
+  font-size: 12px;
+  padding: 8px 4px;
+  min-height: 36px;
+}
+.approval-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 11px;
+  padding: 15px 18px;
+  margin-bottom: 22px;
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border: 1px solid #f3e1b5;
+}
+.approval-banner.rejected {
+  background: var(--error-bg);
+  color: var(--error);
+  border-color: #f6d2cd;
+}
+.approval-banner > div {
+  flex: 1;
+}
+.approval-banner strong {
+  font-size: 14px;
+}
+.approval-banner p {
+  font-size: 13px;
+}
+.approval-banner .text-button {
+  color: inherit;
+  text-decoration: underline;
+}
+.active-info {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.active-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-right: auto;
+}
+.active-delivery .active-actions .button {
+  margin-right: 0;
+}
+.phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  font-size: 12px;
+  padding: 6px 0;
+}
+.status-chip {
+  display: inline-block;
+  background: #ecf7ff;
+  color: #0d5f99;
+  border-radius: 5px;
+  padding: 1px 7px;
+}
+.profile-fixed {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 800px) {
+  .dashboard-sidebar nav {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 600px) {
+  .price-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .heading-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .active-actions {
+    margin-right: 57px;
+  }
+  .ref-lookup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
